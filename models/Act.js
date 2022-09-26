@@ -1,17 +1,15 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+// const Schema = mongoose.Schema;
 
-const actsSchema = new Schema({
+const ActSchema = new mongoose.Schema({
   title: String,
-  users: [{type: Schema.Types.ObjectId, ref: 'user'}],
+  users: [{type: mongoose.Schema.Types.ObjectId, ref: 'user'}],
   user_ratings: [Number],
   avg_rating: Number,
-  created_at: {Date, default: Date.now},
-
   approval_rating: [Number],
   avg_approval: Number,
   approval: Boolean,
 
 });
 
-module.exports = mongoose.model('act', actsSchema);
+module.exports = mongoose.model('Act', ActSchema);

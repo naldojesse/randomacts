@@ -11,11 +11,11 @@ const UserSchema = new mongoose.Schema({ // mongoose.Schema is a constructor fun
   password: String, // password is a property of the schema. It is a string.
   comments: [{
     type: mongoose.Schema.Types.ObjectId, ref: 'Comment'
-  }]
+  }],
   cloudinaryId: {type: String, required: false},
   image: {type: String, required: false},
   acts: [{
-    act_info: {type: Schema.Types.ObjectId, ref: 'act'},
+    act_info: {type: mongoose.Schema.Types.ObjectId, ref: 'act'},
     completed: Boolean
   }],
 });

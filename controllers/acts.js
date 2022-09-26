@@ -1,9 +1,10 @@
-var mongoose = require('mongoose');
 const cloudinary = require("../middleware/cloudinary");
 const Post = require("../models/Post");
+const Act = require("../models/Act");
+const User = require("../models/User");
 
-var Acts = mongoose.model('act');
-var User = mongoose.model('User');
+// const Acts = mongoose.model('Act');
+// const User = mongoose.model('User');
 // * hello world Doc comment
 // ! hello world Error comment
 // ? hello world Warn comment
@@ -12,7 +13,7 @@ module.exports = {
 
     show: async(req, res) => {
         try {
-            await Acts.findOne({_id: req.params.id}).populate('users')
+            await Act.findOne({_id: req.params.id}).populate('users')
             // res.redirect('')
         } catch(err) {
             console.log(err);
@@ -21,8 +22,9 @@ module.exports = {
 
 
     create: async(req, res) => {
+        console.log(req.body)
         try {
-            await Acts.create({
+            await Act.create({
                 title: req.body.title,
                 approval: true,
                 avg_approval: 0,
@@ -38,19 +40,42 @@ module.exports = {
     },
     index: async(req, res) => {
         try {
-            await Acts.find({});
+            await Act.find({});
             console.log("Found all the acts!");
             // res.redirect("/acts")
         } catch (err) {
             console.log(err);
         }
     },
+    generateRAK: async(req, res) => {
+        try {
+            console.log("in generate RAK controller");
+            let randomAct = await Act.aggregate([{$sample: {size: 1}}])
+            console.log("got random act");
+
+
+            // res.redirect("/acts")
+
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    guestGenerateRAK: async(req, res) => {
+        // try {
+        //     console.log("in guest generate RAK controller");
+        //     // await Act.find({}).populate('users')
+        //     // res.redirect("/acts")
+        //
+        // } catch (err) {
+        //     console.log(err);
+        // }
+    },
     update: async(req, res) => {
         try {
-            await Acts.find({});
+            await Act.find({});
             console.log("Found all the acts!");
 
-            await Acts.findOneAndUpdate(req.params.id,{
+            await Act.findOneAndUpdate(req.params.id,{
                 _id: req.params.id,
                 $push: {
                     users: req.user.id,

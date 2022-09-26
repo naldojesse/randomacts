@@ -16,6 +16,7 @@ const connectDB = require("./config/database"); //connectDB is used here to conn
 const mainRoutes = require("./routes/main"); //importing main routes.js file to use the routes in the server.js file
 const postRoutes = require("./routes/posts"); //importing post routes.js file to use the routes in the server.js file
 const commentRoutes = require("./routes/comments"); //
+const actRoutes = require("./routes/acts")
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" }); //dotenv is used here to load environment variables from a .env file into process.env, this is useful because it allows you to store sensitive data in a file that is not tracked by git, in this case we are using it to store the database connection string in a .env file so that we can connect to the database
@@ -67,6 +68,7 @@ app.use(flash());
 app.use("/", mainRoutes);
 app.use("/post", postRoutes);
 app.use("/comment", commentRoutes);
+app.use("/act", actRoutes)
 
 //Server Running On Port 3000 (localhost:3000) - http://localhost:3000/
 //Lastly we need to tell the server which port to listen on and what to do when the server is running on that port (in this case we are logging a message to the console)
