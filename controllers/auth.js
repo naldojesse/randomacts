@@ -82,6 +82,18 @@ exports.getSignup = (req, res) => { //getSignup function is called when the user
   });
 };
 
+exports.update = (req, res) => {
+  User.findOne({ _id: req.user.id }, (err, user) => {
+    user.acts.completed = req.body.acts.completed;
+    user.save(function(err){
+      if(err) {
+        console.log(err);
+      }
+    })
+  })
+}
+
+
 //postSignup function is used to create a new user and then redirect the user to the profile page if the user is created successfully or to the signup page if the user is not created successfully
 exports.postSignup = (req, res, next) => { //postSignup function is called when the user submits the signup form, next is a function that is used to call the next middleware in the stack
   const validationErrors = []; //an array to store the validation errors

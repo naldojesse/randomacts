@@ -12,6 +12,12 @@ const UserSchema = new mongoose.Schema({ // mongoose.Schema is a constructor fun
   comments: [{
     type: mongoose.Schema.Types.ObjectId, ref: 'Comment'
   }]
+  cloudinaryId: {type: String, required: false},
+  image: {type: String, required: false},
+  acts: [{
+    act_info: {type: Schema.Types.ObjectId, ref: 'act'},
+    completed: Boolean
+  }],
 });
 
 // Password hash middleware.
