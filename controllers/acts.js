@@ -29,10 +29,10 @@ module.exports = {
                 approval: true,
                 avg_approval: 0,
                 avg_rating: 0,
-                created_by: req.user.id,
+
             });
             console.log("Act has been added!");
-            res.redirect("/profile")
+            // res.redirect("/profile")
 
         } catch (err) {
             console.log(err);
