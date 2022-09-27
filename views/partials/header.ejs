@@ -26,11 +26,30 @@
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <header class="container">
+<!--  container-fluid is a bootstrap class that makes the container full width.-->
+<!--p-5 is a bootstrap class that adds padding to the top and bottom of the container.&ndash;&gt;-->
+    <header class="container-fluid p-5">
+<!--      bg-primary is a bootstrap class that gives the background a blue color-->
+<!--      text-white is a bootstrap class that gives the text a white color&ndash;&gt;-->
+<!--      text-center is a bootstrap class that centers the text&ndash;&gt;-->
       <div class="container-fluid p-5 bg-primary text-white text-center">
-
         <h1 class="text-white text-center"><a class="text-white text-center" href="/profile">RAK</a></h1>
         <span>The RAK Network</span>
+        <div>
+<!--          btn-outline-light is a bootstrap class that gives the button a white border and white text-->
+            <a href="/profile" class="btn btn-outline-light right">Profile</a>
+            <a href="/login" class="btn btn-outline-light">Login</a>
+            <a href="/signup" class="btn btn-outline-light">Sign Up</a>
+
+          <% if (typeof user !== 'undefined') { %>
+            <div class="float-right p-5">
+              <p><strong>User Name</strong>: <%= user.userName %></p>
+              <p><strong>Email</strong>: <%= user.email %></p>
+              <a href="/logout" class="col-3 btn btn-primary">Logout</a>
+            </div>
+          <% } %>
+
+        </div>
       </div>
     </header>
   </body>

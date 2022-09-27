@@ -74,8 +74,7 @@ module.exports = {
       model: 'User'
     }
   })
-      console.log(posts)
-      console.log(posts[0].comments[0].user.userName)
+      console.log(posts);
       //gets all comments from the database and stores them in the comments variables
       // const comments = await Comment.find().lean(); //waits for the promise to be resolved and then stores the comments in the comments variable
       res.render("feed.ejs", { posts: posts }); //after the promise is resolved the posts data is rendered to the feed page
