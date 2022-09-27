@@ -83,6 +83,16 @@ module.exports = {
       console.log(err);
     }
   },
+  getNewPost: async (req, res) => {
+    console.log('getting new post');
+    console.log(req.params.id);
+    try {
+        const acts = await Act.find({ _id: req.params.id }).lean();
+        res.render("newpost.ejs", { user: req.user, act: acts[0] });
+    } catch (err) {
+      console.log(err);
+    }
+  },
   //getPost is a function that takes in req and res and returns the post page with the post data from the database and renders it to the page
   getPost: async (req, res) => {
     try {

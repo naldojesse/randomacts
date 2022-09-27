@@ -31,6 +31,10 @@ const PostSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  act: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Act",
+  },
   // array of comments for each post that is created
   // each comment is an object with a comment and likes property
   // an array is used because there can be multiple comments for each post

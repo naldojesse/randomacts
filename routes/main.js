@@ -19,5 +19,6 @@ router.get('/generateRAK', ensureAuth, function(req, res) {
     console.log("in acts route");
     Acts.generateRAK(req, res);
 });
+router.get('/newpost/:id', ensureAuth, postsController.getNewPost);
 
 module.exports = router;

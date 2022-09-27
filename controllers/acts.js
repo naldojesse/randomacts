@@ -108,6 +108,7 @@ module.exports = {
         try {
             console.log("in complete act controller");
             console.log(req.params.id);
+            let newpost_actID;
             await User.findOne({_id: req.user.id}, function(err, user) {
                 if(err) {
                     console.log(err);
@@ -117,6 +118,7 @@ module.exports = {
                     user.acts.forEach(function(act) {
                         if(act._id == req.params.id) {
                             act.completed = true;
+                            newpost_actID = act.act_info;
                         }
                     })
                     user.save(function(err) {
@@ -129,7 +131,7 @@ module.exports = {
                     } )
                 }
             })
-            res.redirect("/profile")
+            res.redirect("../newpost/" + newpost_actID);
         } catch (err) {
             console.log(err);
         }
@@ -183,6 +185,7 @@ module.exports = {
                                     console.log(err);
                                 }
                             });
+                            break;
                         }
                     }
                 });
