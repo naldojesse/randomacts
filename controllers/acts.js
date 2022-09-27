@@ -52,9 +52,43 @@ module.exports = {
             console.log("in generate RAK controller");
             let randomAct = await Act.aggregate([{$sample: {size: 1}}])
             console.log("got random act");
+            console.log(randomAct);
+
+            // await User.findOneAndUpdate({_id: req.user.id},
+            //     {$push: {acts: randomAct[0]._id}},
+            //     function(err, user) {
+            //     if(err) {
+            //         console.log(err);
+            //     } else {
+            //         console.log("user updated");
+            //         console.log(user);
+            //     }
+            // })
+            await User.findOne({_id: req.user.id}, function(err, user) {
+
+                user.acts.push({act_info: randomAct[0]._id, completed: false});
+
+                user.save(function(err) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        console.log("user updated");
+                        console.log(user);
+                    }
+                } )
+            } )
 
 
-            // res.redirect("/acts")
+            await Act.findOneAndUpdate({_id: randomAct[0]._id}, {$push: {users: req.user.id}}, function(err, act) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    console.log("act updated");
+                    console.log(act);
+                }
+            })
+
+            res.redirect("/profile")
 
         } catch (err) {
             console.log(err);
@@ -69,6 +103,36 @@ module.exports = {
         // } catch (err) {
         //     console.log(err);
         // }
+    },
+    completeAct: async(req, res) => {
+        try {
+            console.log("in complete act controller");
+            console.log(req.params.id);
+            await User.findOne({_id: req.user.id}, function(err, user) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    console.log("user found");
+                    console.log(user);
+                    user.acts.forEach(function(act) {
+                        if(act._id == req.params.id) {
+                            act.completed = true;
+                        }
+                    })
+                    user.save(function(err) {
+                        if(err) {
+                            console.log(err);
+                        } else {
+                            console.log("user updated");
+                            console.log(user);
+                        }
+                    } )
+                }
+            })
+            res.redirect("/profile")
+        } catch (err) {
+            console.log(err);
+        }
     },
     update: async(req, res) => {
         try {

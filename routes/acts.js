@@ -14,6 +14,8 @@ router.patch('/:id', Acts.update);
 
 router.get('/:id', Acts.show);
 
+router.get('/:id/complete', Acts.completeAct);
+
 //! get this error when using this route
 //! reason: Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters
 // router.get('/generateRAK', ensureAuth, function(req, res) {

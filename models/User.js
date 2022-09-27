@@ -2,6 +2,7 @@
 
 const bcrypt = require("bcrypt"); // Password hash middleware. bcrypt is a library that allows you to hash passwords and compare them to the hashed password in the database. This is so that you can store the password in the database as a hash and not as plain text. This is a security measure.
 const mongoose = require("mongoose"); // mongoose is required here because we are using mongoose to create the schema.
+const deepPopulate = require('mongoose-deep-populate')(mongoose) // This is a library that allows you to populate nested documents in the database. This is used to populate the user's acts in the database.
 
 // User schema is created here.
 // The schema is the structure of the data that is stored in the database.
@@ -15,8 +16,8 @@ const UserSchema = new mongoose.Schema({ // mongoose.Schema is a constructor fun
   cloudinaryId: {type: String, required: false},
   image: {type: String, required: false},
   acts: [{
-    act_info: {type: mongoose.Schema.Types.ObjectId, ref: 'act'},
-    completed: Boolean
+    act_info: {type: mongoose.Schema.Types.ObjectId, ref: 'Act', required: true},
+    completed: Boolean, default: false
   }],
 });
 
@@ -56,3 +57,5 @@ UserSchema.methods.comparePassword = function comparePassword( // UserSchema.met
 };
 
 module.exports = mongoose.model("User", UserSchema); // The User model is exported. The first argument is the name of the model. The second argument is the schema that the model is based on.
+
+UserSchema.plugin(deepPopulate);

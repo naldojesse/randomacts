@@ -9,6 +9,24 @@
       <div class="row justify-content-center mt-5">
           <a class="btn btn-primary" href="/generateRAK">Generate RAK</a>
       </div>
+
+
+
+      <p>Pending</p>
+  <% for (let i = 0; i <= acts.length - 1; i++ ) { %>
+      <% if (acts[i].completed === false) { %>
+            <%- acts[i].act_info.title %>
+          <a href="/act/<%- acts[i]._id %>/complete">Complete</a>
+          <% } %>
+      <% } %>
+
+      <p>Completed</p>
+  <% for (let i = 0; i <= acts.length - 1; i++ ) { %>
+      <% if (acts[i].completed === true) { %>
+            <%- acts[i].act_info.title%>
+            <% } %>
+        <% } %>
+
       <div class="col-6">
           <div>
               <p><strong>User Name</strong>: <%= user.userName %></p>

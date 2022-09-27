@@ -2,15 +2,56 @@
 const cloudinary = require("../middleware/cloudinary");
 const Post = require("../models/Post"); //brings in the post model / schema
 const Comment = require("../models/Comment"); //brings in the comment model / schema
+const Act = require("../models/Act"); //brings in the act model / schema
+const User = require("../models/User");
 
 module.exports = {
   //getProfile is a function that takes in req and res and returns the profile page with the posts and user data from the database and renders it to the page using ejs templating engine
   getProfile: async (req, res) => { //async and await is set up to handle the promise that is returned from the database, the promise is returned from the database when the data is retrieved from the database and the promise is resolved
+    console.log("getting profile");
     try { //try block is used to handle any errors that may occur when the data is retrieved from the database
       // stores all posts made by profile user in variable posts
       const posts = await Post.find({ user: req.user.id }); //finds all posts made by the user that is logged in and stores them in the posts variable
+      // const acts = await User.findOne({_id: req.user.id}); //finds all acts assigned for the user that is logged in and stores them in the acts variable
+
+      const user = await User.find({ _id: req.user.id}).deepPopulate('acts acts.act_info');
+
+      // const user = await User.findOne({ _id: req.user.id }); //finds the user that is logged in and stores them in the user variable
+      // console.log(user);
+      // // console.log(user.populate("acts", "title"));
+      // // console.log(user.populate("Acts", "title"));
+      // // console.log(user.acts);
+      // console.log(user.populate("Act", "acts.act_info"))
+
+
+
+      // // having trouble getting acts to populate on user
+      // //instead manually populate acts array and looping through it to get the act title
+      // const acts = await Act.find();
+      // console.log(acts);
+      // let useracts = []
+      // console.log("not looping?");
+      // console.log(acts.length);
+      // for (let i = 0; i < acts.length; i++) {
+      //   console.log('looping through acts')
+      //   for (let j = 0; j < acts[i].users.length; j++) {
+      //     console.log(req.user.id);
+      //     console.log(acts[i].users[j]);
+      //     if (acts[i].users[j] == req.user.id) {
+      //       useracts.push(acts[i])
+      //     }
+      //   }
+      // }
+      console.log("acts found")
+      // console.log(acts)
+      // console.log(acts[0].email);
+      // console.log(acts[0].acts)
+      // console.log(user[0].acts[0].act_info.title)
+      console.log(user[0].acts.length);
+      let showacts = user[0].acts;
+
       // renders page with posts data
-      res.render("profile.ejs", { posts: posts, user: req.user }); //renders the profile page with the posts and user data from the database and renders it to the page using ejs templating engine
+      res.render("profile.ejs", { posts: posts, user: req.user, acts: showacts}   ); //renders the profile page with the posts and user data from the database and renders it to the page using ejs templating engine
     } catch (err) { //catch block is used to handle any errors that may occur when the data is retrieved from the database
       console.log(err);
     }
